@@ -88,8 +88,6 @@ const Foods = () => {
 
   const isNextBtnDisabled = foods.length - getSliderLength() === activeSlide;
 
-  console.log(sliderRef.length);
-
   return (
     <div style={{ margin: "0 25px" }}>
       <Heading
