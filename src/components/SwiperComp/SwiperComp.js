@@ -17,6 +17,9 @@ const SwiperComp = (props) => {
   });
 
   const settings = {
+    beforeChange: (_, next) => {
+      props.setActiveSlide(next);
+    },
     infinite: false,
     slidesToShow: 4,
     slidesToScroll: 4,

@@ -16,8 +16,16 @@ const Heading = (props) => {
         </div>
 
         <div className={classes.slideBtn}>
-          <SlideButton direction="prev" prev={props.navigationPrevious} index={props.index} />
-          <SlideButton direction="next" next={props.navigationNext} index={props.index} />
+          <SlideButton
+            direction="prev"
+            prev={props.navigationPrevious}
+            disabled={props.disablePrevButton}
+          />
+          <SlideButton
+            direction="next"
+            next={props.navigationNext}
+            disabled={props.disableNextButton}
+          />
         </div>
       </div>
     </div>

@@ -7,10 +7,13 @@ import img3 from "../../assets/img3.jpg";
 import img4 from "../../assets/img4.jpg";
 import SwiperComp from "../../components/SwiperComp/SwiperComp";
 import Heading from "../../components/Heading/Heading";
+import { useIsMobile, useMidDevice, useIsTablet } from "../../Hooks/useMediaQuery";
 
 const Foods = () => {
-  const [index, setIndex] = useState(0);
-  const [noOfSlide, setNoOfSlide] = useState(0);
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+  const isMid = useMidDevice();
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const sliderRef = useRef();
 
@@ -26,10 +29,6 @@ const Foods = () => {
 
   const navigationPrevious = () => {
     sliderRef.current.slickPrev();
-  };
-
-  const beforeChange = (prev, next) => {
-    setIndex(next);
   };
 
   const foods = [
@@ -80,6 +79,15 @@ const Foods = () => {
     },
   ];
 
+  const getSliderLength = () => {
+    if (isMobile) return 1;
+    if (isTablet) return 2;
+    if (isMid) return 3;
+    return 4;
+  };
+
+  const isNextBtnDisabled = foods.length - getSliderLength() === activeSlide;
+
   console.log(sliderRef.length);
 
   return (
@@ -88,9 +96,15 @@ const Foods = () => {
         title="Popular near you"
         navigationNext={navigationNext}
         navigationPrevious={navigationPrevious}
-        index={index}
+        disablePrevButton={activeSlide === 0}
+        disableNextButton={isNextBtnDisabled}
       />
-      <SwiperComp foods={foods} reference={sliderRef} beforeChange={beforeChange} />
+      <SwiperComp
+        foods={foods}
+        reference={sliderRef}
+        activeSlide={activeSlide}
+        setActiveSlide={setActiveSlide}
+      />
     </div>
   );
 };
